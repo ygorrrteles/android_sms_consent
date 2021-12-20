@@ -2,6 +2,8 @@ name: android_sms_consent
 description: Flutter plugin to perform one-tap SMS verification with the SMS User Consent API in Android.
 version: 1.0.0
 homepage: https://khalti.com
+issue_tracker: https://github.com/khalti/android_sms_consent/issues
+repository: https://github.com/khalti/android_sms_consent
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
