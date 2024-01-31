@@ -2,6 +2,7 @@
 
 package com.khalti.android_sms_consent
 
+import android.content.Context
 import android.app.Activity
 import android.content.*
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -42,7 +43,7 @@ class SMSConsentBroadcastReceiver(private val activity: Activity, private val ch
         SmsRetriever.getClient(activity).startSmsUserConsent(phone)
 
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        activity.registerReceiver(this, intentFilter, SmsRetriever.SEND_PERMISSION, null)
+        activity.registerReceiver(this, intentFilter, SmsRetriever.SEND_PERMISSION, null, Context.RECEIVER_EXPORTED)
     }
 
     fun stop() {
