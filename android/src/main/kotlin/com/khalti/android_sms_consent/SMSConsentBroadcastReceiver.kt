@@ -5,6 +5,7 @@ package com.khalti.android_sms_consent
 import android.content.Context
 import android.app.Activity
 import android.content.*
+import android.os.Build
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
@@ -29,6 +30,7 @@ class SMSConsentBroadcastReceiver(private val activity: Activity, private val ch
                         /*no-op*/
                     }
                 }
+
                 CommonStatusCodes.TIMEOUT -> onTimeout()
             }
         }
@@ -43,7 +45,11 @@ class SMSConsentBroadcastReceiver(private val activity: Activity, private val ch
         SmsRetriever.getClient(activity).startSmsUserConsent(phone)
 
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        activity.registerReceiver(this, intentFilter, SmsRetriever.SEND_PERMISSION, null, Context.RECEIVER_EXPORTED)
+        if (Build.VERSION.SDK_INT > 26) {
+            activity.registerReceiver(this, intentFilter, SmsRetriever.SEND_PERMISSION, null, Context.RECEIVER_EXPORTED)
+        } else {
+            activity.registerReceiver(this, intentFilter, SmsRetriever.SEND_PERMISSION, null)
+        }
     }
 
     fun stop() {
